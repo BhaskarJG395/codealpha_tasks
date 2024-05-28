@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Age Calculator</title>
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes highlight {
+            0% { background-color: #e0f2f1; }
+            50% { background-color: #a7ffeb; }
+            100% { background-color: #e0f2f1; }
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e0f7fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        h1 {
+            color: #006064;
+            text-align: center;
+            margin-bottom: 20px;
+            animation: fadeIn 2s ease-in-out;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            max-width: 400px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+            padding: 20px;
+            animation: fadeIn 2s ease-in-out;
+        }
+        td {
+            padding: 10px;
+            text-align: left;
+            vertical-align: middle;
+        }
+        label {
+            font-weight: bold;
+            color: #004d40;
+        }
+        input[type="date"], input[type="text"] {
+            width: calc(100% - 22px); /* Full width with padding adjustment */
+            padding: 10px;
+            margin: 5px 0;
+            box-sizing: border-box;
+            border: 1px solid #b0bec5;
+            border-radius: 4px;
+            font-size: 16px;
+            background-color: #f1f8e9;
+            transition: border-color 0.3s, background-color 0.3s;
+        }
+        input[type="text"] {
+            background-color: #e0f2f1;
+        }
+        input[type="date"]:hover, input[type="text"]:hover {
+            border-color: #4db6ac;
+        }
+        input[type="date"]:focus, input[type="text"]:focus {
+            border-color: #00796b;
+            outline: none;
+        }
+        tr:nth-child(odd) {
+            background-color: #f7f7f7;
+        }
+        tr:nth-child(even) {
+            background-color: #e0f2f1;
+        }
+        tr:hover {
+            background-color: #b2dfdb;
+        }
+        @media (max-width: 600px) {
+            table {
+                width: 90%;
+                padding: 10px;
+            }
+            input[type="date"], input[type="text"] {
+                font-size: 14px;
+                padding: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Age Calculator</h1>
+    <table>
+        <tr>
+            <td><label for="dob">Date of Birth</label></td>
+            <td><input type="date" id="dob"></td>
+        </tr>  
+        <tr>
+            <td><label>Age :</label></td>
+            <td><input type="text" id="result" readonly></td>
+        </tr>
+    </table>
+
+    <!-- JavaScript code starts here-->
+    <script>
+        document.getElementById('dob').addEventListener('change', function() {
+            const dob = new Date(this.value);
+            const today = new Date();
+
+            let years = today.getFullYear() - dob.getFullYear();
+            let months = today.getMonth() - dob.getMonth();
+            let days = today.getDate() - dob.getDate();
+
+            if (days < 0) {
+                months--;
+                days += new Date(today.getFullYear(), today.getMonth(), 0).getDate();
+            }
+
+            if (months < 0) {
+                years--;
+                months += 12;
+            }
+
+            const resultInput = document.getElementById('result');
+            resultInput.value = `${years} years, ${months} months, ${days} days`;
+
+            // Add highlight animation
+            resultInput.style.animation = 'none';
+            resultInput.offsetHeight; /* trigger reflow */
+            resultInput.style.animation = 'highlight 2s ease-in-out';
+        });
+    </script>
+</body>
+</html>
